@@ -1,0 +1,11 @@
+﻿################################################################################
+# この .gitignore ファイルは Microsoft(R) Visual Studio によって自動的に作成されました。
+################################################################################
+
+/.vs/Learning_Win32
+/Learning_Win32/x64/Debug
+/x64/Debug
+/Learning_Win32.sln
+/Learning_Win32.vcxproj
+/Learning_Win32.vcxproj.filters
+/Learning_Win32.vcxproj.user
