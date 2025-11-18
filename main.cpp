@@ -14,16 +14,24 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     switch (msg) {
-    case WM_PAINT: {
-        return 0;
-    }
-    case WM_KEYDOWN: {
-        return 0;
+    case WM_COMMAND: {
+        switch (LOWORD(wParam)) {
+            case ID_40001: {
+                MessageBoxA(hWnd, "ああ", "aa", MB_OK);
+                break;
+            }
+            case ID_40002: {
+                PostQuitMessage(0); //メッセージループ終了（=アプリを終了）
+                DestroyWindow(hWnd);
+                break;
+            }
+        }
+        break;
     }
     case WM_DESTROY: {
         PostQuitMessage(0); //メッセージループ終了（=アプリを終了）
         DestroyWindow(hWnd);
-        return 0;
+        break;
     }
     }
     return DefWindowProc(hWnd, msg, wParam, lParam);
