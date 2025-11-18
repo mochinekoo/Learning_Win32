@@ -1,4 +1,5 @@
 #include <Windows.h>
+#include "resource.h"
 
 const int WINDOW_WIDTH = 1280;
 const int WINDOW_HEIGHT = 720;
@@ -56,7 +57,7 @@ int initWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
         WINDOW_WIDTH, //ウインドウ幅
         WINDOW_HEIGHT, //ウインドウ高さ
         NULL, //親ウインドウ
-        NULL, //メニュー
+        LoadMenu(hInstance, MAKEINTRESOURCE(IDR_MENU1)), //メニュー
         hInstance, //インスタンス
         NULL //パラメータ
     );
