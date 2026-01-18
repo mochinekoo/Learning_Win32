@@ -1,5 +1,6 @@
 #include <Windows.h>
 #include "resource.h"
+#include "resource1.h"
 
 const int WINDOW_WIDTH = 1280;
 const int WINDOW_HEIGHT = 720;
@@ -69,6 +70,39 @@ int initWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
         hInstance, //インスタンス
         NULL //パラメータ
     );
+
+    HFONT hFont = CreateFont(
+        24, //高さ
+        0, //幅
+        0, //傾き
+        0, //傾き
+        FW_NORMAL, //太さ
+        FALSE, //イタリック
+        FALSE, //下線
+        FALSE, //打ち消し線
+        SHIFTJIS_CHARSET, //文字セット
+        OUT_DEFAULT_PRECIS, //出力精度
+        CLIP_DEFAULT_PRECIS, //クリッピング精度
+        DEFAULT_QUALITY, //品質
+        DEFAULT_PITCH | FF_DONTCARE, //ピッチとファミリ
+        "MS ゴシック" //フォント名
+    );
+
+    HWND hwndStatic = CreateWindow(
+        "STATIC", //クラス名
+        "ああああ", //表示文字列
+        WS_VISIBLE | WS_CHILD | SS_CENTER, //スタイル
+        10, //表示位置左
+        10, //表示位置上
+        WINDOW_WIDTH - 20, //幅
+        50, //高さ
+        hwnd, //親ウインドウ
+        NULL, //メニュー
+        hInstance, //インスタンス
+        NULL //パラメータ
+    );
+
+    SendMessage(hwndStatic, WM_SETFONT, (WPARAM)hFont, TRUE); //フォント設定
 
     if (hwnd == NULL) {
         return -1;
