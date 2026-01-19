@@ -1,6 +1,8 @@
 #include <Windows.h>
 #include "resource.h"
 #include "resource1.h"
+#include <string>
+#include <strsafe.h>
 
 const int WINDOW_WIDTH = 1280;
 const int WINDOW_HEIGHT = 720;
@@ -13,10 +15,32 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	}
 }
 
+int CALLBACK EnumFontFamExProc(
+    const ENUMLOGFONTEXW* lpelfe,
+    const TEXTMETRICW* lpntme,
+    DWORD FontType,
+    LPARAM lParam
+) {
+	WCHAR pszDest[100];
+    HWND hDlg = (HWND)lParam;
+    HWND listBox = GetDlgItem(hDlg, IDC_LIST1);
+    StringCchPrintfW(pszDest, 100, L"%s", lpelfe->elfFullName);
+    SendMessageW(listBox, LB_ADDSTRING, NULL, (LPARAM) pszDest);
+    return 1; 
+}
+
 INT_PTR CALLBACK DlglogProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
     UNREFERENCED_PARAMETER(lParam);
+    HDC hdc = GetDC(hDlg);
+    LOGFONTW logFont = {};
     switch (message) {
     case WM_INITDIALOG:
+
+        logFont.lfCharSet = DEFAULT_CHARSET;
+
+        EnumFontFamiliesExW(hdc, &logFont, (FONTENUMPROCW)EnumFontFamExProc, (LPARAM)hDlg, 0);
+        ReleaseDC(hDlg, hdc);
+
         return (INT_PTR)TRUE;
     case WM_COMMAND:
         if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL) {
